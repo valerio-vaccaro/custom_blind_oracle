@@ -1,0 +1,39 @@
+services:
+
+  node:
+    image:  tulipan81/blind_pin_server:v0.0.3@sha256:b251bac87b5a3b302769554bd19baded30e1a89b844f88872b70d09ff1717451
+    depends_on:
+      - web
+    restart: on-failure
+    stop_grace_period: 1m
+    ports:
+      - $APP_PINSERVER_PORT:$APP_PINSERVER_PORT
+    volumes:
+      - ${PWD}/data/server_public_key.pub:/server_public_key.pub
+      - ${PWD}/data/server_private_key.key:/server_private_key.key
+      - ${PWD}/data/pins:/pins
+
+  web: 
+    image: tulipan81/pinserver_web:v0.0.31@sha256:be72bb0fea00a47b46ea39a9b21a5f5276f12e926435045e34cddb6baf75b4a3 
+    restart: on-failure
+    ports:
+      - $APP_PINSERVER_WEB_PORT:$APP_PINSERVER_WEB_PORT
+    volumes:
+      - ${PWD}/data/server_public_key.pub:/app/server_public_key.pub
+      - ${PWD}/data/server_private_key.key:/app/server_private_key.key
+      - ${PWD}/data/pins:/app/pins
+    environment:
+      PINSERVER_URL_A: ${APP_PINSERVER_HIDDEN_SERVICE}
+      PINSERVER_PORT_A: ${APP_PINSERVER_PORT}
+      PINSERVER_URL_B: ${APP_TAILSCALE_URL}
+      PINSERVER_PORT_B: ${APP_PINSERVER_PORT}
+
+  tor:
+    image: getumbrel/tor:0.4.7.8@sha256:2ace83f22501f58857fa9b403009f595137fa2e7986c4fda79d82a8119072b6a
+    user: "1000:1000"
+    restart: on-failure
+    volumes:
+      - ${PWD}/data/torrc:/etc/tor/torrc:ro
+      - ${PWD}/data:/data
+    environment:
+      HOME: "/tmp"

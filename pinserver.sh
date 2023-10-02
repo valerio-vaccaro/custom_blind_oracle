@@ -8,7 +8,7 @@ echo "
 88     8 88    8   8 88   88   8    88   88  88   8 88   88  8 88 8  8 88     8 88    88 88  8 88  8 8    8 88   8 88  8 88   88    88   
 88eeeee8 88eee 8eee8 88e8 88   8 8ee88   88  88   8 88ee 88  8 88 8  8 88eeeee8 88eee 88 88  8 88ee8 8eeee8 88   8 88  8 88e8 88eee 88ee 
 
- Usage: ./pinserver.sh [start|stop]
+ Usage: ./pinserver.sh [start|stop|log|restart]
 
  Report bugs to: valerio.vaccaro@gmail.com
 "
@@ -35,10 +35,16 @@ case "$1" in
     docker compose up --detach web
     sleep 1
 
-    docker compose up
+    docker compose up -d
     ;;
   "stop")
     docker compose down
+    ;;
+  "log")
+    docker compose logs
+    ;;
+  "restart")
+    docker compose restart
     ;;
   *)
     echo "You have failed to specify what to do correctly."

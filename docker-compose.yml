@@ -4,6 +4,8 @@ services:
     image:  tulipan81/blind_pin_server:v0.0.3@sha256:b251bac87b5a3b302769554bd19baded30e1a89b844f88872b70d09ff1717451
     depends_on:
       - web
+      - tailscale
+      - tor
     restart: on-failure
     stop_grace_period: 1m
     ports:
@@ -27,6 +29,15 @@ services:
       PINSERVER_PORT_A: ${APP_PINSERVER_PORT}
       PINSERVER_URL_B: ${APP_TAILSCALE_URL}
       PINSERVER_PORT_B: ${APP_PINSERVER_PORT}
+
+  tailscale:
+    network_mode: "host"
+    image: tailscale/tailscale:v1.48.1@sha256:51c756718c30b15d1d3d228b1f4425cba646ec15da5d188a0d55c32b8ea4f378
+    restart: on-failure
+    stop_grace_period: 1m
+    command: "sh -c 'tailscale web --listen 0.0.0.0:8240 & exec tailscaled --tun=userspace-networking'"
+    volumes:
+      - ${PWD}/data:/var/lib
 
   tor:
     image: getumbrel/tor:0.4.7.8@sha256:2ace83f22501f58857fa9b403009f595137fa2e7986c4fda79d82a8119072b6a

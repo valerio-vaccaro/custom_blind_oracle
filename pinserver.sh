@@ -14,7 +14,7 @@ echo "
 "
 
 export APP_PINSERVER_PORT="8096"
-export APP_PINSERVER_WEB_PORT="8081"
+export APP_PINSERVER_WEB_PORT="8095"
 tor_hidden_service_dir="/data/tor/hidden_service"
 
 cat > ./data/torrc <<EOF

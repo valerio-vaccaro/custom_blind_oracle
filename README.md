@@ -45,7 +45,7 @@ Start the app with the command `./pinserver.sh start`
  ✔ Container custom_blind_oracle-node-1       Started  
 ```
 
-Visit the page http://127.0.0.1:8081 and set custom blind oracle on Jade using the provided qrcode.
+Visit the page http://127.0.0.1:8095 and set custom blind oracle on Jade using the provided qrcode.
 
 When you what stop the app you can use the command `./pinserver.sh stop`.
 

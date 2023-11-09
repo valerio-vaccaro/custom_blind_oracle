@@ -1,7 +1,7 @@
 services:
 
   node:
-    image:  tulipan81/blind_pin_server:v0.0.3@sha256:b251bac87b5a3b302769554bd19baded30e1a89b844f88872b70d09ff1717451
+    image:  tulipan81/blind_pin_server:v0.0.4@sha256:6c181140ca4fff76ed56b4ceda2efaef45db43c804bffa6a6b8618e8a63cad14
     depends_on:
       - web
       - tailscale
@@ -16,7 +16,7 @@ services:
       - ${PWD}/data/pins:/pins
 
   web: 
-    image: tulipan81/pinserver_web:v0.0.31@sha256:be72bb0fea00a47b46ea39a9b21a5f5276f12e926435045e34cddb6baf75b4a3 
+    image: tulipan81/pinserver_web:v0.0.32@sha256:764d63e061484c5c492d6653695ee43944d40f645c622719b1ff3281ee38ed10 
     restart: on-failure
     ports:
       - $APP_PINSERVER_WEB_PORT:$APP_PINSERVER_WEB_PORT

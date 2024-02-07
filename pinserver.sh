@@ -13,7 +13,7 @@ echo "
  Report bugs to: valerio.vaccaro@gmail.com
 "
 
-export APP_PINSERVER_PORT="8096"
+export APP_PINSERVER_PORT="8097"
 export APP_PINSERVER_WEB_PORT="8095"
 tor_hidden_service_dir="/data/tor/hidden_service"
 

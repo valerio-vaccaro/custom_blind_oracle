@@ -21,14 +21,14 @@ cat > ./data/torrc <<EOF
 
 # pinserver Hidden Service
 HiddenServiceDir $tor_hidden_service_dir
-HiddenServicePort $APP_PINSERVER_PORT custom_blind_oracle-node-1:$APP_PINSERVER_PORT
+HiddenServicePort $APP_PINSERVER_PORT custom_blind_oracle-node-1:8096
 HiddenServicePort 80 custom_blind_oracle-web-1:$APP_PINSERVER_WEB_PORT
 
 EOF
 
 app_pinserver_hidden_service_file="${tor_hidden_service_dir}/hostname"
-export APP_PINSERVER_HIDDEN_SERVICE="$(sudo cat ."${app_pinserver_hidden_service_file}" 2>/dev/null || echo "notyetset.onion")"
-export APP_TAILSCALE_URL="$(hostname 2>/dev/null || echo "notyetset.tailscale")"
+export APP_PINSERVER_HIDDEN_SERVICE="http://$(sudo cat ."${app_pinserver_hidden_service_file}" 2>/dev/null || echo "http://notyetset.onion")"
+export APP_TAILSCALE_URL="http://$(hostname 2>/dev/null || echo "http://notyetset.tailscale")"
 
 case "$1" in
   "start")

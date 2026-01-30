@@ -32,10 +32,12 @@ export APP_TAILSCALE_URL="http://$(hostname 2>/dev/null || echo "notyetset.tails
 
 case "$1" in
   "start")
-    docker compose up --detach web
-    sleep 1
 
-    docker compose up -d
+    docker compose up --detach web
+    sleep 5
+    docker compose down
+
+    docker compose up
     ;;
   "stop")
     docker compose down
